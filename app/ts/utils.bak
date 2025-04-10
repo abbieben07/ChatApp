@@ -1,0 +1,35 @@
+import { uname, Utsname } from 'node-uname'
+
+export class DeviceInfo {
+    static deviceId(): string {
+        let deviceId = ''
+        if (global.isIOS) {
+            const systemInfo = new interop.Reference<Utsname>()
+            uname(systemInfo)
+            deviceId = NSString.stringWithUTF8String(systemInfo.value.machine).toString()
+        } else {
+            deviceId = android.os.Build.BOARD
+            if (!(deviceId && !deviceId.toLocaleLowerCase().includes('unknown'))) {
+                deviceId = android.os.Build.SERIAL
+            }
+        }
+        return deviceId
+    }
+    static isEmulator(): boolean {
+        if (global.isIOS) {
+            return DeviceInfo.deviceId() === 'i386' || DeviceInfo.deviceId() === 'x86_64'
+        } else {
+            const Build = android.os.Build
+            return (
+                Build.FINGERPRINT.startsWith('generic') ||
+                Build.FINGERPRINT.startsWith('unknown') ||
+                Build.MODEL.includes('google_sdk') ||
+                Build.MODEL.includes('Emulator') ||
+                Build.MODEL.includes('Android SDK built for x86') ||
+                Build.MANUFACTURER.includes('Genymotion') ||
+                (Build.BRAND.startsWith('generic') && Build.DEVICE.startsWith('generic')) ||
+                'google_sdk' === Build.PRODUCT
+            )
+        }
+    }
+}

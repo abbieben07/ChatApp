@@ -1,0 +1,12 @@
+src/theme/**
+dist/
+dist_electron/
+coverage/
+certificate/
+.vscode
+.github
+.cirleci
+.ssh
+node_modules
+tests/**
+e2e/
