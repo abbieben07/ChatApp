@@ -1,25 +1,82 @@
 // You can add your native dependencies here
 dependencies {
-//  implementation 'androidx.multidex:multidex:2.0.1'
+  implementation 'androidx.work:work-runtime:2.10.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.bugsnag:bugsnag-android:6.12.1'
+    implementation 'androidx.activity:activity:1.10.0'
+    implementation 'androidx.activity:activity-ktx:1.10.0'
+    //implementation 'com.bugsnag:bugsnag-android-performance:1.10.0'
+    //implementation 'com.bugsnag:bugsnag-android-performance-okhttp:1.10.0'
+    //implementation 'com.bugsnag:bugsnag-android-performance-appcompat:1.10.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:2.1.0')
+    //implementation 'androidx.biometric:biometric:1.1.0'
+
+    androidTestImplementation('com.wix:detox:+') {
+        exclude module: 'protobuf-lite'
+    }
 }
 
 android {
-  compileSdkVersion 34
-  buildToolsVersion "34"
-  // ndkVersion ""
+  compileSdkVersion 36
+    buildToolsVersion '36'
+    ndkVersion '29.0.13113456'
 
-  defaultConfig {
-    minSdkVersion 23
-    targetSdkVersion 34
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 36
+        multiDexEnabled true
 
-    // Version Information
-    versionCode 1
-    versionName "1.0.0"
-    
-    generatedDensities = []
-  }
+        versionCode 1
+        versionName '0.0.1'
 
-  aaptOptions {
-    additionalParameters "--no-version-vectors"
-  }
+        generatedDensities = []
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    aaptOptions {
+        additionalParameters '--no-version-vectors'
+    }
+
+    buildTypes {
+        release {
+      //minifyEnabled true
+      //shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+      proguardFile "${rootProject.projectDir}/../App_Resources/Android/proguard-rules.pro"
+
+      ndk {
+        debugSymbolLevel 'SYMBOL_TABLE'
+        abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+      }
+        }
+    }
+
+    compileOptions.with {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst '**/libbugsnag-ndk.so'
+    }
+
+    buildFeatures {
+        prefab  = true
+        buildConfig  = true
+    }
+
+// splits {
+//     abi {
+//         reset()
+//         enable true
+//         universalApk false
+//         include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+//     }
+// }
 }

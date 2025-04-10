@@ -2,7 +2,7 @@
 declare const com: any
 
 @NativeClass()
-@JavaProxy('com.nasrda.nsiwc.application')
+@JavaProxy('com.nasrda.chat.application')
 class Application extends android.app.Application {
 	static {
 		if (process.env.APP_ENV !== 'local') {

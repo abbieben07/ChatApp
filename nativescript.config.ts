@@ -1,11 +1,11 @@
-import { NativeScriptConfig } from "@nativescript/core"
+import { NativeScriptConfig } from '@nativescript/core'
 
 export default {
-	id: "org.nativescript.App",
-	appPath: "app",
-	appResourcesPath: "App_Resources",
+	id: 'com.nasrda.chat',
+	appPath: 'app',
+	appResourcesPath: 'App_Resources',
 	android: {
-		v8Flags: "--expose_gc",
-		markingMode: "none",
+		v8Flags: '--expose_gc',
+		markingMode: 'none',
 	},
 } as NativeScriptConfig

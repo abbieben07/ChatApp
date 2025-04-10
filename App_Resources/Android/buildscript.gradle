@@ -1,0 +1,26 @@
+dependencies {
+        // classpath for Android Gradle Plugin (commented out)
+        // classpath 'com.android.tools.build:gradle:8.8.0'
+
+        // Bugsnag Gradle plugin
+        classpath 'com.bugsnag:bugsnag-android-gradle-plugin:8.1.0'
+
+        // Kotlin Gradle plugin
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0'
+
+        // React Native Gradle plugin (commented out)
+        // classpath 'com.facebook.react:react-gradle-plugin'
+}
+
+repositories {
+        maven {
+                url = uri('https://plugins.gradle.org/m2/')
+        }
+        gradlePluginPortal()
+        google()
+        mavenLocal()
+        jcenter() // Note: jcenter is deprecated, consider alternatives if possible.
+        maven {
+                url = uri('https://www.jitpack.io')
+        }
+}

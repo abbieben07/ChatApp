@@ -1,0 +1,4 @@
+{
+	"whitelist-plugins-usages": true,
+	"whitelist": ["com.orhanobut*", "android.Manifest*"]
+}
