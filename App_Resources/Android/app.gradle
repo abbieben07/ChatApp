@@ -1,4 +1,7 @@
 // You can add your native dependencies here
+apply plugin: 'com.bugsnag.android.gradle'
+apply plugin: 'com.google.gms.google-services'
+
 dependencies {
   implementation 'androidx.work:work-runtime:2.10.0'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -11,6 +14,7 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:2.1.0')
     //implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'chat.sdk:xmpp-app:5.6.7'
 
     androidTestImplementation('com.wix:detox:+') {
         exclude module: 'protobuf-lite'

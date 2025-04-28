@@ -2,11 +2,8 @@
 import { initialize as initImage, shutDown } from '@nativescript-community/ui-image'
 import { themer } from '@nativescript-community/ui-material-core'
 import { init as initBackgroundHTTP } from '@nativescript/background-http'
-import { Application, ApplicationEventData, ApplicationSettings } from '@nativescript/core'
-import { enableLocationRequest } from '@nativescript/geolocation'
-import { LocalNotifications } from '@nativescript/local-notifications'
+import { Application, ApplicationEventData } from '@nativescript/core'
 import Theme from '@nativescript/theme'
-import { DateTime } from 'luxon'
 import mitt from 'mitt'
 import { createApp, h } from 'nativescript-vue'
 import { setActivePinia } from 'pinia'
@@ -15,13 +12,7 @@ import http from '~/ts/http'
 import router from '~/ts/router'
 import setupPinia, { useSettingsStore } from '~/ts/store'
 import setupVeeValidate from '~/ts/validation'
-import { checkAppVersionForUpdate, error, renderer, requestPermission, startup, submit } from '~/utils/misc'
-import Location from './models/location'
-import { useUploadData } from './schedules/main'
-import { KEY } from './schedules/notification'
-import { ScheduleWorker } from './services/scheduler'
-import setupFirebase from './ts/firebase'
-import setupSqlite from './ts/sqlite'
+import { checkAppVersionForUpdate, error, renderer, startup, submit } from '~/utils/misc'
 import setupPlatformCSS from './utils/platform'
 
 // if (process.env.APP_ENV === 'local' && __DEV__) {
@@ -31,7 +22,7 @@ import setupPlatformCSS from './utils/platform'
 
 initBackgroundHTTP()
 setupPlatformCSS()
-initImage({ isDownsampleEnabled: true })
+initImage({ isDownscaleEnabled: true })
 
 export const emitter = mitt<any>()
 
@@ -89,27 +80,10 @@ let interval = 0
 
 Application.on(Application.resumeEvent, (_e: ApplicationEventData) => {
 	checkAppVersionForUpdate()
-	ApplicationSettings.setString(KEY, DateTime.now().toISO())
-
-	LocalNotifications.requestPermission()
-	enableLocationRequest(true, true)
-	requestPermission()
 })
 
 Application.on(Application.exitEvent, (_e: ApplicationEventData) => {
 	//sessionOut()
 	shutDown()
 	clearInterval(interval)
-})
-
-Application.on(Application.launchEvent, () => {
-	setupFirebase()
-	setupSqlite([new Location()])
-
-	useUploadData()
-	// @ts-ignore
-	interval = setInterval(() => useUploadData(), 300000)
-	ScheduleWorker()
-
-	//startAgent(() => processTask())
 })

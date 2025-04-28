@@ -6,7 +6,6 @@ import { DateTime } from 'luxon'
 import { acceptHMRUpdate, createPinia, defineStore } from 'pinia'
 import { createORM } from 'pinia-orm'
 import PersistedState from 'pinia-plugin-persistedstate'
-import { UserData } from '~/models/user'
 
 // @todo: use secure storage
 const storage = new SecureStorage()
@@ -22,7 +21,7 @@ export const AppStorage = {
 }
 
 export const useUserStore = defineStore('user', {
-	state: () => ({ user: {} as UserData }),
+	state: () => ({ user: {} }),
 	getters: {
 		getUser: (state) => state.user,
 	},

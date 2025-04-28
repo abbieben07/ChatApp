@@ -1,6 +1,6 @@
 import { openOrCreate } from '@nativescript-community/sqlite'
 import { knownFolders } from '@nativescript/core'
-import Model from '~/models/model'
+//import Model from '~/models/model'
 
 export function initDatabase() {
 	const path = `${knownFolders.documents().path}/database.db`
@@ -56,7 +56,7 @@ export async function lastRecord(tableName: string) {
 	return await db.select(`SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`, [])
 }
 
-export default function setupSqlite(models: Model[] | any[]) {
+export default function setupSqlite(models: any[]) {
 	models.forEach(async (model) => {
 		createTable(model.$entity(), model.$fields()).catch((e) => console.error(e))
 

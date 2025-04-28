@@ -4,6 +4,11 @@ use_frameworks!
 $NSFirebaseAnalyticsWithoutAdIdSupport = true
 
 pod "Bugsnag"
+pod "ChatSDK"
+pod "ChatSDKFirebase/Adapter"
+pod "ChatSDKFirebase/Upload"
+pod "ChatSDKFirebase/Push"
+pod "ChatSDK/ModAddContactWithQRCode"
 # pod 'BugsnagPerformance'
 
 post_install do |installer|
